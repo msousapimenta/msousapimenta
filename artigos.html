@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Publicações Científicas | Hematologia Clínica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #7b1e2b;
+      --accent: #277278;
+      --accent-dark: #1e5b5f;
+      --bg-main: #ffffff;
+      --bg-panel: #f5f5f5;
+      --text: #1f2933;
+      --muted: #6b7280;
+      --link: #7b1e2b;
+      --topbar-height: 48px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg-main);
+      color: var(--text);
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== TOPBAR ===== */
+    .topbar {
+      background: var(--primary);
+      height: var(--topbar-height);
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+
+    .topbar-left img {
+      height: 28px;
+      background: white;
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+
+    .topbar-nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    .topbar-nav a {
+      color: white;
+      font-size: 0.9rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+
+    .topbar-nav a:hover {
+      background: rgba(255,255,255,0.15);
+      text-decoration: none;
+    }
+
+    .cta {
+      background: var(--accent);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .cta:hover {
+      background: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    /* ===== MOBILE MENU ===== */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--topbar-height);
+      left: 0;
+      width: 100%;
+      background: var(--primary);
+      padding: 12px;
+      z-index: 999;
+    }
+
+    .mobile-menu a {
+      display: block;
+      color: white;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    .mobile-menu a:hover {
+      background: rgba(255,255,255,0.15);
+      text-decoration: none;
+    }
+
+    /* ===== LAYOUT ===== */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - var(--topbar-height));
+      margin-top: var(--topbar-height);
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      background: var(--bg-panel);
+      padding: 24px;
+      border-right: 1px solid #e5e7eb;
+    }
+
+    .sidebar img {
+      width: 160px;
+      margin: 0 auto 24px;
+      display: block;
+    }
+
+    .sidebar h2 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 4px;
+    }
+
+    .sidebar a:hover {
+      background: #e6e6e6;
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
+      padding: 60px 80px;
+      max-width: 900px;
+    }
+
+    .breadcrumbs {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .content h1 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    .content h2 {
+      font-size: 1.5rem;
+      margin-top: 50px;
+      margin-bottom: 16px;
+    }
+
+    .content p {
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 40px 20px;
+    }
+
+    .footer-bar {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 1000px) {
+
+      .topbar-nav,
+      .cta {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: var(--topbar-height);
+        left: -260px;
+        width: 260px;
+        height: calc(100vh - var(--topbar-height));
+        z-index: 1000;
+        transition: left 0.25s ease;
+      }
+
+      .sidebar.open {
+        left: 0;
+      }
+
+      .content {
+        padding: 40px 20px;
+      }
+    }
+
+    .overlay {
+      position: fixed;
+      top: var(--topbar-height);
+      left: 0;
+      width: 100%;
+      height: calc(100vh - var(--topbar-height));
+      background: rgba(0,0,0,0.2);
+      z-index: 900;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <img src="assets/logo.jpeg" alt="">
+    Hematologia Clínica
+  </div>
+
+  <nav class="topbar-nav">
+    <a href="#">Doenças</a>
+    <a href="#">Corpo Clínico</a>
+    <a href="publicacoes.html">Publicações</a>
+    <a href="info.html">Informação</a>
+  </nav>
+
+  <a href="consulta.html" class="cta">Consulta Especializada</a>
+</div>
+
+<!-- MOBILE MENU -->
+<nav class="mobile-menu">
+  <a href="#">Doenças</a>
+  <a href="#">Corpo Clínico</a>
+  <a href="publicacoes.html">Publicações</a>
+  <a href="info.html">Informação</a>
+</nav>
+
+<div class="overlay" onclick="closeMenu()"></div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <img src="assets/logo.jpeg" alt="Hematologia Clínica">
+    <h2>Publicações Científicas</h2>
+    <ul>
+      <li><a href="#intro" onclick="closeMenu()">Introdução</a></li>
+      <li><a href="#artigos" onclick="closeMenu()">Artigos Científicos</a></li>
+      <li><a href="#comunicacoes" onclick="closeMenu()">Comunicações</a></li>
+      <li><a href="#outras" onclick="closeMenu()">Outras Publicações</a></li>
+      <li><a href="index.html">← Voltar ao Início</a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <nav class="breadcrumbs">
+      <a href="index.html">Início</a> › Publicações Científicas
+    </nav>
+
+    <h1 id="intro">Publicações Científicas</h1>
+    <p>
+      Esta secção reúne a produção científica, artigos publicados e
+      comunicações apresentadas no âmbito da hematologia clínica.
+    </p>
+
+    <h2 id="artigos">Artigos Científicos</h2>
+    <p>
+      Lista de artigos científicos publicados em revistas nacionais e
+      internacionais, com relevância clínica e científica.
+    </p>
+
+    <h2 id="comunicacoes">Comunicações</h2>
+    <p>
+      Comunicações orais apresentadas em congressos,
+      simpósios e reuniões científicas.
+    </p>
+
+    <h2 id="outras">Outras Publicações</h2>
+    <p>
+      Capítulos de livros, recomendações clínicas e outros
+      trabalhos relevantes na área da hematologia.
+    </p>
+
+  </main>
+
+</div>
+
+<footer>
+  Este site tem caráter informativo e não substitui uma consulta médica.
+</footer>
+
+<div class="footer-bar">
+  Hematologia Clínica · Informação médica especializada
+</div>
+
+<script>
+  function toggleMenu() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.overlay');
+
+    sidebar.classList.toggle('open');
+    overlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
+  }
+
+  function closeMenu() {
+    document.querySelector('.sidebar').classList.remove('open');
+    document.querySelector('.overlay').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
